@@ -1,0 +1,144 @@
+menu "Example Configuration"
+
+    config INNER_BARRIER_PIN
+        int "Inner barrier GPIO pin"
+        range 0 34
+        default 5
+        help
+            GPIO number (IOxx) of the inner barrier pin.
+
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used as input.
+
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config OUTER_BARRIER_PIN
+        int "Outer barrier GPIO pin"
+        range 0 34
+        default 26
+        help
+            GPIO number (IOxx) of the outer barrier pin.
+
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used as input.
+
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config TRIGGER_PIN_IN
+        int "Inner trigger GPIO pin"
+        range 0 34
+        default 23
+        help
+            GPIO number (IOxx) of the inner trigger pin. This pin is triggered by a network event
+            (e.g. MQTT) and will output signals to the inner barrier pin.
+
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used as input.
+
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config TRIGGER_PIN_OUT
+        int "Outer trigger GPIO pin"
+        range 0 34
+        default 18
+        help
+            GPIO number (IOxx) of the outer trigger pin. This pin is triggered by a network event
+            (e.g. MQTT) and will output signals to the outer barrier pin.
+
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used as input.
+
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config ESP_WIFI_SSID
+        string "Service Set Identifier of WiFi"
+        help
+            Service Set Identifier (SSID) of the wireless network to which the ESP should be connected.
+
+    config ESP_WIFI_PASS
+        string "Network key of the WiFi"
+        help
+            ESP gets access to the wireless network by providing the network key of the network.
+
+    config ESP_WIFI_MAXIMUM_RETRY
+        int "Connection retries of ESP to wireless network"
+        range 0 20
+        default 5
+        help
+            Number of connection retries of the ESP.
+
+    config GET_CLOUD_EVENTS
+        bool "ESP will subscribe to room entry events in IoT platform room broker"
+        default "y"
+        help
+            This ESP will subscribe to the published room entry/leave events in IoT platform room broker.
+            So, in addition to updating count by changes in the barrier pin levels, it will trigger such
+            changes itself using room events as well.
+
+    config TEST_ROOM_COMMANDS
+        bool "Test room commands"
+        default "n"
+        help
+            Test room commands including corner cases. Only possible if GET_CLOUD_EVENTS is also "y".
+
+    config IOT_PLATFORM_GATEWAY_IP
+        string "IP address of the MQTT gateway on the IoT platform"
+        default "131.159.35.132"
+
+    config IOT_PLATFORM_GATEWAY_PORT
+        int "Port of the MQTT gateway on the IoT platform"
+        default 1883
+
+    config IOT_PLATFORM_GATEWAY_USERNAME
+        string "Username for authentication at the MQTT gateway on the IoT platform"
+        default "JWT"
+
+    config IOT_PLATFORM_GATEWAY_PASSWORD
+        string "Password for authentication at the MQTT gateway on the IoT platform"
+        help
+            Click on 'Download Device Key' on the IoT platform to get the JWT token
+
+    config IOT_PLATFORM_GROUP
+        string "Group name"
+        default "group4_2021_ss"
+        help
+            The group name that is used to login to the IoT Platform Frontend.
+            Necessary in the payload when publishing data to the platform.
+
+    config IOT_PLATFORM_USER_ID
+        int "User ID"
+        default 48
+
+    config IOT_PLATFORM_DEVICE_ID
+        int "Device ID"
+        default 109
+
+    config IOT_PLATFORM_COUNT_SENSOR_NAME
+        string "Sensor name for count value"
+        default "count"
+
+    config IOT_PLATFORM_RESTART_SENSOR_NAME
+        string "Sensor name for restart"
+        default "restart"
+
+    config IOT_PLATFORM_ROOM_BROKER_TOPIC
+        string "Name of the topic for room events on the IoT Platform"
+        default "ROOM_EVENTS_TEST"
+        help
+            Production topic: 'ROOM_EVENTS'
+            Test topic: 'ROOM_EVENTS_TEST'
+
+    config IOT_PLATFORM_ROOM_BROKER_HOST
+        string "Host name of the room events broker on the IoT platform"
+        default "iotplatform.caps.in.tum.de"
+
+    config IOT_PLATFORM_ROOM_BROKER_PORT
+        int "Port of the room events broker on the IoT platform"
+        default 1885
+
+    config IOT_PLATFORM_ROOM_BROKER_USERNAME
+        string "Username for authentication on the room events broker on the IoT platform"
+        default "user1"
+
+    config IOT_PLATFORM_ROOM_BROKER_PASSWORD
+        string "Password for authentication on the room events broker on the IoT platform"
+        help
+            See slides for password
+
+endmenu
